@@ -1,11 +1,13 @@
 import requests
 import pickle
 import json
+import re
+import string
 from datetime import datetime
 from collections import defaultdict
 
-_CACHE_MAP_LOC = 'e7_catamap.pkl'
-_SHA_MAP_LOC = 'e7_shamap.pkl'
+_CACHE_MAP_LOC = 'e7_catamap.json'
+_SHA_MAP_LOC = 'e7_shamap.json'
 
 # I hate myself
 def hacky_dd_to_dict(d):
@@ -25,15 +27,15 @@ def get_maps(cached=True):
     if cached:
         # Hero catalyst mapping
         try:
-            with open(_CACHE_MAP_LOC, 'rb') as map_cache:
-                hero_catalyst_map = pickle.load(map_cache)
+            with open(_CACHE_MAP_LOC, 'r+') as map_cache:
+                hero_catalyst_map = json.load(map_cache)
         except Exception as e:
             print('Error loading cached hero->catalyst map, reconstructing:\n{}'.format(e))
 
         # SHA mapping
         try:
-            with open(_SHA_MAP_LOC, 'rb') as sha_cache:
-                sha_map = pickle.load(sha_cache)
+            with open(_SHA_MAP_LOC, 'r+') as sha_cache:
+                sha_map = json.load(sha_cache)
         except Exception as e:
             print('Error loading cached SHA map, reconstructing:\n{}'.format(e))
 
@@ -46,12 +48,12 @@ def cache_maps(hero_catalyst_map, sha_map):
     start = datetime.now()
 
     # Store hero->catalyst map
-    with open(_CACHE_MAP_LOC, 'wb') as map_cache:
-        pickle.dump(hero_catalyst_map, map_cache, protocol=pickle.HIGHEST_PROTOCOL)
+    with open(_CACHE_MAP_LOC, 'w+') as map_cache:
+        json.dump(hero_catalyst_map, map_cache)
 
     # Store SHA map
-    with open(_SHA_MAP_LOC, 'wb') as sha_cache:
-        pickle.dump(sha_map, sha_cache, protocol=pickle.HIGHEST_PROTOCOL)
+    with open(_SHA_MAP_LOC, 'w+') as sha_cache:
+        json.dump(sha_map, sha_cache)
 
     print('{} - Serialized cached maps to disk'.format(datetime.now() - start))
 
@@ -162,7 +164,7 @@ def create_catalyst_map(hero_catalyst_map):
 USAGE:
 
 import json
-from scrape_e7x import get_maps, update_maps, create_catalyst_map, cache_maps
+from scrape_e7x import get_maps, update_maps, create_catalyst_map, cache_maps, format_catalyst_name
 
 hero_catalyst_map, sha_map = update_maps(*get_maps())
 catalyst_map = create_catalyst_map(hero_catalyst_map)
