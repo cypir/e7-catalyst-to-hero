@@ -5,7 +5,7 @@ Python script to create catalyst mappings: `scrape_e7x.py`.
 import json
 from scrape_e7x import get_maps, update_maps, create_catalyst_map, cache_maps
 
-hero_catalyst_map, sha_map = update_maps(*get_maps(cached=False))
+hero_catalyst_map, sha_map = update_maps(*get_maps())
 catalyst_map = create_catalyst_map(hero_catalyst_map)
 print(json.dumps(catalyst_map['demon-blood-gem'], indent=4))
 ```
