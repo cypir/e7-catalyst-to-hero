@@ -145,10 +145,10 @@ def create_catalyst_map(hero_catalyst_map):
     e.g.
     fused-nerve:
         achates:
-            s1: 2
-            s2: 2
-            s3: 2
-            awakening_6: 8
+            Skills:
+                [2, 2, 2]
+            Awakening:
+                [0, 0, 0, 0, 0, 8]
     '''
     start = datetime.now()
 
