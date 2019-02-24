@@ -1,68 +1,95 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Python script to create catalyst mappings: `scrape_e7x.py`.
 
-## Available Scripts
+### Usage
 
-In the project directory, you can run:
+```python
+import json
+from scrape_e7x import get_maps, update_maps, create_catalyst_map, cache_maps
 
-### `npm start`
+hero_catalyst_map, sha_map = update_maps(*get_maps())
+catalyst_map = create_catalyst_map(hero_catalyst_map)
+print(json.dumps(catalyst_map['demon-blood-gem'], indent=4))
+```
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Creates three mappings:
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+#### SHA Map
 
-### `npm test`
+This map is used to identify which heroes have had their data updated
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+hero JSON filename:
+  SHA
+```
 
-### `npm run build`
+e.g.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+tieria.json:
+  c76681c5d32c984c71a8d656db850b184e9ca01c
+```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+#### Hero -> Catalyst Map
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This map
 
-### `npm run eject`
+```
+hero name:
+  catalyst name:
+    skill/awakening:
+      quantity needed
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+e.g.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+Zeno:
+  {
+    "shiny-enchantment": {
+        "s1": 12,
+        "s2": 12,
+        "s3": 12
+    },
+    "horn-of-desire": {
+        "s1": 2,
+        "s2": 2,
+        "s3": 2,
+        "awakening_6": 10
+    },
+    "blazing-rage": {
+        "awakening_5": 15
+    }
+}
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Catalyst -> Usage Map
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This is the goal - to map catalysts to their usages.
 
-## Learn More
+```
+catalyst name:
+  hero name:
+    skill/awakening:
+      quantity needed
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+e.g.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```
+demon-blood-gem
+  {
+    "Dingo": {
+        "s1": 2,
+        "s2": 2,
+        "s3": 1,
+        "awakening_6": 8
+    },
+    "Judge Kise": {
+        "s1": 2,
+        "s2": 2,
+        "s3": 3,
+        "awakening_6": 10
+    },
+    ...
+  }
+```
