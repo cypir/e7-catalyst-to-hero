@@ -139,16 +139,16 @@ def create_catalyst_map(hero_catalyst_map):
 
     catalyst:
         hero:
-            Skill/Awakening:
-                list of quantities
+            usage:
+                quantity
 
     e.g.
-    demon-blood-gem:
-        Rin:
-            Skills:
-                [2, 2, 1]
-            Awakening:
-                [0, 0, 0, 0, 0, 8]
+    fused-nerve:
+        achates:
+            s1: 2
+            s2: 2
+            s3: 2
+            awakening_6: 8
     '''
     start = datetime.now()
 
