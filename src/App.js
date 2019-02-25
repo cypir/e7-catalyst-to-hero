@@ -10,6 +10,8 @@ import Collapse from "@material-ui/core/Collapse";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import SubDisplay from "./SubDisplay.js";
+import util from "./util";
 
 class App extends Component {
   state = {
@@ -54,25 +56,6 @@ class App extends Component {
     });
   };
 
-  getSums = (hero, type) => {
-    let sum = 0;
-
-    //get total sum
-    if (!type) {
-      if (hero.Awakening) {
-        sum = hero.Awakening.reduce((sum, val) => sum + val);
-      }
-
-      if (hero.Skills) {
-        sum += hero.Skills.reduce((sum, val) => sum + val);
-      }
-    } else {
-      sum = hero[type].reduce((sum, val) => sum + val);
-    }
-
-    return sum;
-  };
-
   render() {
     return (
       <div>
@@ -98,19 +81,19 @@ class App extends Component {
                 >
                   <ListItemText>
                     <Typography variant="h6">
-                      {result.hero} ({this.getSums(result)})
+                      {result.hero} ({util.getSums(result)})
                     </Typography>
                   </ListItemText>
                   <ListItemSecondaryAction>
                     <div style={{ display: "flex" }}>
                       {result.Awakening ? (
                         <Typography style={{ marginRight: 12 }}>
-                          {this.getSums(result, "Awakening")}A
+                          {util.getSums(result, "Awakening")}A
                         </Typography>
                       ) : null}
                       {result.Skills ? (
                         <Typography>
-                          {this.getSums(result, "Skills")}S
+                          {util.getSums(result, "Skills")}S
                         </Typography>
                       ) : null}
                     </div>
@@ -119,50 +102,10 @@ class App extends Component {
                 <Collapse in={result.selected} timeout="auto" unmountOnExit>
                   <Grid container spacing={24}>
                     <Grid item xs={6}>
-                      <div style={{ marginLeft: 12 }}>
-                        <Typography variant="body1">
-                          <u>Awakening</u>
-                        </Typography>
-                        <ul style={{ marginTop: 2, paddingLeft: 18 }}>
-                          {result.Awakening &&
-                            result.Awakening.map((item, index) => {
-                              if (item > 0) {
-                                return (
-                                  <li>
-                                    <Typography variant="body1">
-                                      {item} required for level {index}
-                                    </Typography>
-                                  </li>
-                                );
-                              } else {
-                                return <span />;
-                              }
-                            })}
-                        </ul>
-                      </div>
+                      <SubDisplay result={result} type={"Awakening"} />
                     </Grid>
                     <Grid item xs={6}>
-                      <Typography variant="body1">
-                        <u>Skill Enhancement</u>
-                      </Typography>
-                      <div style={{ marginRight: 12 }}>
-                        <ul style={{ marginTop: 2, paddingLeft: 18 }}>
-                          {result.Skills &&
-                            result.Skills.map((item, index) => {
-                              if (item > 0) {
-                                return (
-                                  <li>
-                                    <Typography key={index} variant="body1">
-                                      {item} required for level {index + 1}
-                                    </Typography>
-                                  </li>
-                                );
-                              } else {
-                                return <span key={index} />;
-                              }
-                            })}
-                        </ul>
-                      </div>
+                      <SubDisplay result={result} type={"Skills"} />
                     </Grid>
                   </Grid>
                 </Collapse>
