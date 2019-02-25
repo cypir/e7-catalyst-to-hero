@@ -42,7 +42,7 @@ export default class SubDisplay extends Component {
                 return (
                   <li key={index}>
                     <Typography variant="body1">
-                      {item} required for level {index + 1}
+                      {item} for level {index + 1}
                     </Typography>
                   </li>
                 );
