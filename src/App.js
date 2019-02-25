@@ -9,6 +9,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import CheckIcon from "@material-ui/icons/CheckCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 class App extends Component {
   state = {
@@ -47,6 +48,9 @@ class App extends Component {
             value={this.state.search}
             onChange={this.onSearchChange}
           />
+          <Button variant="contained" type="submit" color="primary">
+            Search
+          </Button>
         </form>
         <List component="nav">
           {this.state.results.map((result, index) => {
