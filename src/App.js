@@ -29,13 +29,12 @@ class App extends Component {
     let searchKey = slug(this.state.search).toLowerCase();
     let results = cataMap[searchKey];
 
-    console.log(searchKey);
-    console.log(results);
-
-    let heroesArray = Object.keys(results).map(key => {
-      return { hero: key, ...results[key] }; //create an array where we put the key into the contents of the array
-    });
-    this.setState({ results: heroesArray });
+    if (results) {
+      let heroesArray = Object.keys(results).map(key => {
+        return { hero: key, ...results[key] }; //create an array where we put the key into the contents of the array
+      });
+      this.setState({ results: heroesArray });
+    }
   };
 
   render() {
