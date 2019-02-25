@@ -9,6 +9,7 @@ from collections import defaultdict
 
 _CACHE_MAP_LOC = 'e7_catamap.json'
 _SHA_MAP_LOC = 'e7_shamap.json'
+_CATA_MAP_LOC = 'e7_cata_to_hero_map.json'
 
 # I hate myself
 def hacky_dd_to_dict(d):
@@ -162,6 +163,11 @@ def create_catalyst_map(hero_catalyst_map):
 
     # convert to dict
     catalyst_hero_map = hacky_dd_to_dict(catalyst_hero_map)
+
+    # Store catalyst->hero map
+    with open(_CATA_MAP_LOC, 'w+') as map_cache:
+        json.dump(catalyst_hero_map, map_cache)
+
     print('{} - Generated catalyst -> hero map!'.format(datetime.now() - start))
 
     return catalyst_hero_map
