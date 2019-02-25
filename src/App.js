@@ -9,6 +9,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Collapse from "@material-ui/core/Collapse";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 
 class App extends Component {
   state = {
@@ -73,19 +74,65 @@ class App extends Component {
           {this.state.results.map((result, index) => {
             return (
               <div key={index}>
-                <ListItem button onClick={() => this.handleSelect(index)}>
-                  <ListItemText>{result.hero}</ListItemText>
+                <ListItem
+                  button
+                  onClick={() => this.handleSelect(index)}
+                  disableGutters
+                >
+                  <ListItemText>
+                    <Typography variant="h6">{result.hero}</Typography>
+                  </ListItemText>
                   <ListItemSecondaryAction>
                     <div style={{ display: "flex" }}>
                       {result.Awakening ? (
                         <Typography style={{ marginRight: 12 }}>A</Typography>
                       ) : null}
-                      {result.Skills ? <Typography>E</Typography> : null}
+                      {result.Skills ? <Typography>S</Typography> : null}
                     </div>
                   </ListItemSecondaryAction>
                 </ListItem>
                 <Collapse in={result.selected} timeout="auto" unmountOnExit>
-                  That content though
+                  <Grid container spacing={24}>
+                    <Grid item xs={6}>
+                      <div style={{ marginLeft: 12 }}>
+                        <Typography variant="body1">
+                          <u>Awakening</u>
+                        </Typography>
+                        {result.Awakening &&
+                          result.Awakening.map((item, index) => {
+                            if (item > 0) {
+                              return (
+                                <Typography variant="body1">
+                                  {item} required for Awakening Level {index}
+                                </Typography>
+                              );
+                            } else {
+                              return <span />;
+                            }
+                          })}
+                      </div>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Typography variant="body1">
+                        <u>Skill Enhancement</u>
+                      </Typography>
+                      <div style={{ marginRight: 12 }}>
+                        {result.Skills &&
+                          result.Skills.map((item, index) => {
+                            if (item > 0) {
+                              return (
+                                <Typography key={index} variant="body1">
+                                  {item} required for Skill Enhancement Level{" "}
+                                  {index + 1}
+                                </Typography>
+                              );
+                            } else {
+                              return <span key={index} />;
+                            }
+                          })}
+                      </div>
+                    </Grid>
+                  </Grid>
                 </Collapse>
               </div>
             );
