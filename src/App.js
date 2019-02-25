@@ -102,10 +102,18 @@ class App extends Component {
                 <Collapse in={result.selected} timeout="auto" unmountOnExit>
                   <Grid container spacing={24}>
                     <Grid item xs={6}>
-                      <SubDisplay result={result} type={"Awakening"} />
+                      <SubDisplay
+                        result={result}
+                        type={"Awakening"}
+                        prefix={"level "}
+                      />
                     </Grid>
                     <Grid item xs={6}>
-                      <SubDisplay result={result} type={"Skills"} />
+                      <SubDisplay
+                        result={result}
+                        type={"Skills"}
+                        prefix={"s"}
+                      />
                     </Grid>
                   </Grid>
                 </Collapse>

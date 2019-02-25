@@ -29,7 +29,7 @@ export default class SubDisplay extends Component {
   };
 
   render() {
-    const { result, type } = this.props;
+    const { result, type, prefix } = this.props;
     return (
       <div style={{ marginLeft: 12 }}>
         <Typography variant="body1">
@@ -42,7 +42,8 @@ export default class SubDisplay extends Component {
                 return (
                   <li key={index}>
                     <Typography variant="body1">
-                      {item} for level {index + 1}
+                      {item} for {prefix}
+                      {index + 1}
                     </Typography>
                   </li>
                 );
