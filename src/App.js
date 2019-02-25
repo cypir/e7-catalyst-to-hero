@@ -19,6 +19,11 @@ class App extends Component {
     results: []
   };
 
+  constructor() {
+    super();
+    console.log(cataMap);
+  }
+
   onSearchChange = e => {
     this.setState({ search: e.target.value });
   };
@@ -37,6 +42,8 @@ class App extends Component {
         return { hero: key, selected: false, ...results[key] }; //create an array where we put the key into the contents of the array
       });
       this.setState({ results: heroesArray });
+    } else {
+      this.setState({ results: [] });
     }
   };
 
