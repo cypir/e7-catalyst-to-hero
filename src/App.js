@@ -102,18 +102,22 @@ class App extends Component {
                         <Typography variant="body1">
                           <u>Awakening</u>
                         </Typography>
-                        {result.Awakening &&
-                          result.Awakening.map((item, index) => {
-                            if (item > 0) {
-                              return (
-                                <Typography variant="body1">
-                                  {item} required for Awakening Level {index}
-                                </Typography>
-                              );
-                            } else {
-                              return <span />;
-                            }
-                          })}
+                        <ul>
+                          {result.Awakening &&
+                            result.Awakening.map((item, index) => {
+                              if (item > 0) {
+                                return (
+                                  <li>
+                                    <Typography variant="body1">
+                                      {item} required for level {index}
+                                    </Typography>
+                                  </li>
+                                );
+                              } else {
+                                return <span />;
+                              }
+                            })}
+                        </ul>
                       </div>
                     </Grid>
                     <Grid item xs={6}>
@@ -121,19 +125,22 @@ class App extends Component {
                         <u>Skill Enhancement</u>
                       </Typography>
                       <div style={{ marginRight: 12 }}>
-                        {result.Skills &&
-                          result.Skills.map((item, index) => {
-                            if (item > 0) {
-                              return (
-                                <Typography key={index} variant="body1">
-                                  {item} required for Skill Enhancement Level{" "}
-                                  {index + 1}
-                                </Typography>
-                              );
-                            } else {
-                              return <span key={index} />;
-                            }
-                          })}
+                        <ul>
+                          {result.Skills &&
+                            result.Skills.map((item, index) => {
+                              if (item > 0) {
+                                return (
+                                  <li>
+                                    <Typography key={index} variant="body1">
+                                      {item} required for level {index + 1}
+                                    </Typography>
+                                  </li>
+                                );
+                              } else {
+                                return <span key={index} />;
+                              }
+                            })}
+                        </ul>
                       </div>
                     </Grid>
                   </Grid>
