@@ -30,8 +30,6 @@ class App extends Component {
     let searchKey = slug(this.state.search).toLowerCase();
     let results = cataMap[searchKey];
 
-    console.log(results);
-
     if (results) {
       let heroesArray = Object.keys(results).map(key => {
         return { hero: key, selected: false, ...results[key] }; //create an array where we put the key into the contents of the array
