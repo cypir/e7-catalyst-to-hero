@@ -1,21 +1,9 @@
-Python script to create catalyst mappings: `scrape_e7x.py`.
-
-### Usage
-
-```python
-import json
-from scrape_e7x import get_maps, update_maps, create_catalyst_map, cache_maps
-
-hero_catalyst_map, sha_map = update_maps(*get_maps())
-catalyst_map = create_catalyst_map(hero_catalyst_map)
-print(json.dumps(catalyst_map['demon-blood-gem'], indent=4))
-```
-
-Creates three mappings:
+## Underlying Data Format
+This application relies on data from [EpicSevenDB](https://github.com/EpicSevenDB/gamedatabase).
 
 #### SHA Map
 
-This map is used to identify which heroes have had their data updated
+This map is used to identify which heroes have had their data updated:
 
 ```
 hero JSON filename:
@@ -31,13 +19,13 @@ tieria.json:
 
 #### Hero -> Catalyst Map
 
-This map
+Mapping of catalyst usage by hero:
 
 ```
 hero name:
   catalyst name:
-    skill/awakening:
-      quantity needed
+    Skills/Awakening:
+      quantity needed by level
 ```
 
 e.g.
@@ -46,20 +34,16 @@ e.g.
 Zeno:
   {
     "shiny-enchantment": {
-        "s1": 12,
-        "s2": 12,
-        "s3": 12
+        "Skills":
+          [12, 12, 12]
     },
     "horn-of-desire": {
-        "s1": 2,
-        "s2": 2,
-        "s3": 2,
-        "awakening_6": 10
+        "Skills":
+          [2, 2, 2],
+        "Awakening":
+          [0, 0, 0, 0, 0, 10]
     },
-    "blazing-rage": {
-        "awakening_5": 15
-    }
-}
+    ...
 ```
 
 #### Catalyst -> Usage Map
@@ -69,8 +53,8 @@ This is the goal - to map catalysts to their usages.
 ```
 catalyst name:
   hero name:
-    skill/awakening:
-      quantity needed
+    Skills/Awakening:
+      quantity needed by level
 ```
 
 e.g.
@@ -79,16 +63,16 @@ e.g.
 demon-blood-gem
   {
     "Dingo": {
-        "s1": 2,
-        "s2": 2,
-        "s3": 1,
-        "awakening_6": 8
+        "Skills":
+          [2, 2, 1],
+        "Awakening":
+          [0, 0, 0, 0, 0, 8]
     },
     "Judge Kise": {
-        "s1": 2,
-        "s2": 2,
-        "s3": 3,
-        "awakening_6": 10
+        "Skills":
+          [2, 2, 3],
+        "Awakening":
+          [0, 0, 0, 0, 0, 10]
     },
     ...
   }
