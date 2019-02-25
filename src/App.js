@@ -54,6 +54,25 @@ class App extends Component {
     });
   };
 
+  getSums = (hero, type) => {
+    let sum = 0;
+
+    //get total sum
+    if (!type) {
+      if (hero.Awakening) {
+        sum = hero.Awakening.reduce((sum, val) => sum + val);
+      }
+
+      if (hero.Skills) {
+        sum += hero.Skills.reduce((sum, val) => sum + val);
+      }
+    } else {
+      sum = hero[type].reduce((sum, val) => sum + val);
+    }
+
+    return sum;
+  };
+
   render() {
     return (
       <div>
@@ -78,18 +97,20 @@ class App extends Component {
                   disableGutters
                 >
                   <ListItemText>
-                    <Typography variant="h6">{result.hero}</Typography>
+                    <Typography variant="h6">
+                      {result.hero} ({this.getSums(result)})
+                    </Typography>
                   </ListItemText>
                   <ListItemSecondaryAction>
                     <div style={{ display: "flex" }}>
                       {result.Awakening ? (
                         <Typography style={{ marginRight: 12 }}>
-                          {result.Awakening.reduce((sum, val) => sum + val)}A
+                          {this.getSums(result, "Awakening")}A
                         </Typography>
                       ) : null}
                       {result.Skills ? (
                         <Typography>
-                          {result.Skills.reduce((sum, val) => sum + val)}S
+                          {this.getSums(result, "Skills")}S
                         </Typography>
                       ) : null}
                     </div>
