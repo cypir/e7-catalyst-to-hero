@@ -33,7 +33,7 @@ export default class SubDisplay extends Component {
     return (
       <div style={{ marginLeft: 12 }}>
         <Typography variant="body1">
-          <u>Awakening</u> ({util.getSums(result, "Awakening")})
+          <u>{type}</u> ({util.getSums(result, type)})
         </Typography>
         <ul style={{ marginTop: 2, paddingLeft: 18 }}>
           {result[type] &&
