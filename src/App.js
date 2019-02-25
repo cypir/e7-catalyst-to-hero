@@ -85,9 +85,15 @@ class App extends Component {
                   <ListItemSecondaryAction>
                     <div style={{ display: "flex" }}>
                       {result.Awakening ? (
-                        <Typography style={{ marginRight: 12 }}>A</Typography>
+                        <Typography style={{ marginRight: 12 }}>
+                          {result.Awakening.reduce((sum, val) => sum + val)}A
+                        </Typography>
                       ) : null}
-                      {result.Skills ? <Typography>S</Typography> : null}
+                      {result.Skills ? (
+                        <Typography>
+                          {result.Skills.reduce((sum, val) => sum + val)}S
+                        </Typography>
+                      ) : null}
                     </div>
                   </ListItemSecondaryAction>
                 </ListItem>
