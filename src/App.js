@@ -6,8 +6,7 @@ import cataMap from "./e7_cata_to_hero_map.json";
 import slug from "slug";
 import { ListItemText } from "@material-ui/core";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import CheckIcon from "@material-ui/icons/CheckCircle";
-import CloseIcon from "@material-ui/icons/Close";
+import Collapse from "@material-ui/core/Collapse";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 
@@ -30,12 +29,30 @@ class App extends Component {
     let searchKey = slug(this.state.search).toLowerCase();
     let results = cataMap[searchKey];
 
+    console.log(results);
+
     if (results) {
       let heroesArray = Object.keys(results).map(key => {
-        return { hero: key, ...results[key] }; //create an array where we put the key into the contents of the array
+        return { hero: key, selected: false, ...results[key] }; //create an array where we put the key into the contents of the array
       });
       this.setState({ results: heroesArray });
     }
+  };
+
+  handleSelect = index => {
+    this.setState(state => {
+      const results = state.results.map((item, i) => {
+        if (index === i) {
+          return { ...item, selected: !item.selected };
+        } else {
+          return item;
+        }
+      });
+
+      return {
+        results
+      };
+    });
   };
 
   render() {
@@ -54,17 +71,23 @@ class App extends Component {
         </form>
         <List component="nav">
           {this.state.results.map((result, index) => {
-            console.log(result);
             return (
-              <ListItem key={index} button>
-                <ListItemText>{result.hero}</ListItemText>
-                <ListItemSecondaryAction>
-                  {result.Awakening ? <CheckIcon /> : <CloseIcon />}
-                  Awakening
-                  {result.Skills ? <CheckIcon /> : <CloseIcon />}
-                  Skill Enhance
-                </ListItemSecondaryAction>
-              </ListItem>
+              <div key={index}>
+                <ListItem button onClick={() => this.handleSelect(index)}>
+                  <ListItemText>{result.hero}</ListItemText>
+                  <ListItemSecondaryAction>
+                    <div style={{ display: "flex" }}>
+                      {result.Awakening ? (
+                        <Typography style={{ marginRight: 12 }}>A</Typography>
+                      ) : null}
+                      {result.Skills ? <Typography>E</Typography> : null}
+                    </div>
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <Collapse in={result.selected} timeout="auto" unmountOnExit>
+                  That content though
+                </Collapse>
+              </div>
             );
           })}
         </List>
