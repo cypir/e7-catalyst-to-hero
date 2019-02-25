@@ -102,7 +102,7 @@ class App extends Component {
                         <Typography variant="body1">
                           <u>Awakening</u>
                         </Typography>
-                        <ul style={{ paddingLeft: 24 }}>
+                        <ul style={{ paddingLeft: 18 }}>
                           {result.Awakening &&
                             result.Awakening.map((item, index) => {
                               if (item > 0) {
@@ -125,7 +125,7 @@ class App extends Component {
                         <u>Skill Enhancement</u>
                       </Typography>
                       <div style={{ marginRight: 12 }}>
-                        <ul style={{ paddingLeft: 24 }}>
+                        <ul style={{ paddingLeft: 18 }}>
                           {result.Skills &&
                             result.Skills.map((item, index) => {
                               if (item > 0) {
