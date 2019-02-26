@@ -35,7 +35,7 @@ export default class SubDisplay extends Component {
         <Typography variant="body1">
           <u>{type}</u> ({util.getSums(result, type)})
         </Typography>
-        <ul style={{ marginTop: 2, paddingLeft: 18 }}>
+        <ul style={{ marginTop: 2, paddingLeft: 18, listStyleType: "disc" }}>
           {result[type] &&
             result[type].map((item, index) => {
               if (item > 0) {
