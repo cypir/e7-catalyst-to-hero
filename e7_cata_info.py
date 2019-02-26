@@ -38,8 +38,8 @@ for item_file in item_jsons:
             mobcount = int(loc.get('mobcount', 0))
         except Exception as e:
             mobcount = 0
-        best_locations.append([loc['node'], mobcount])
-    best_locations = sorted(best_locations, key=lambda x: x[1], reverse=True)
+        best_locations.append({'stage': loc['node'], 'mobs': mobcount})
+    best_locations = sorted(best_locations, key=lambda x: x['mobs'], reverse=True)
 
     # Map names and location info
     loc_map[item_db_name] = {
