@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import cataMap from "./e7_cata_to_hero_map.json";
+import cataNames from "./e7_name_map.json";
 import slug from "slug";
 import { ListItemText } from "@material-ui/core";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -12,20 +13,35 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import SubDisplay from "./SubDisplay.js";
 import util from "./util";
+//import Fuse from "fuse.js";
+
+const catalysts = Object.keys(cataNames).map(key => {
+  return { id: key, value: cataNames[key] };
+});
+
+//var fuse = new Fuse(catalysts, { keys: ["value"], distance: 0 });
 
 class App extends Component {
   state = {
     search: "",
-    results: []
+    results: [],
+    validSearch: false,
+    matchingCatalysts: []
   };
 
-  constructor() {
-    super();
-    console.log(cataMap);
+  componentDidMount() {
+    console.log(catalysts);
   }
 
   onSearchChange = e => {
-    this.setState({ search: e.target.value });
+    let matchingCatalysts = catalysts.filter(name => {
+      return name.value
+        .toLowerCase()
+        .replace(/\W/g, "")
+        .includes(e.target.value.replace(/\W/g, "").toLowerCase());
+    });
+
+    this.setState({ search: e.target.value, matchingCatalysts });
   };
 
   //TODO: enable search for catalyst / fuzzy search
@@ -77,7 +93,7 @@ class App extends Component {
             Search
           </Button>
         </form>
-        <List component="nav">
+        <List>
           {this.state.results.map((result, index) => {
             return (
               <div key={index}>
