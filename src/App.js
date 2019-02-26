@@ -29,10 +29,6 @@ class App extends Component {
     matchingCatalysts: []
   };
 
-  componentDidMount() {
-    console.log(catalysts);
-  }
-
   onSearchChange = e => {
     let matchingCatalysts = catalysts.filter(name => {
       return name.value
@@ -41,7 +37,25 @@ class App extends Component {
         .includes(e.target.value.replace(/\W/g, "").toLowerCase());
     });
 
-    this.setState({ search: e.target.value, matchingCatalysts });
+    //when we have more than 1 matching catalyst, we are doing a new search so we clear
+    if (matchingCatalysts.length > 1) {
+      this.setState({ search: e.target.value, matchingCatalysts, results: [] });
+    } else {
+      this.setState({ search: e.target.value, matchingCatalysts });
+    }
+  };
+
+  onCatalystClicked = value => {
+    let matchingCatalysts = catalysts.filter(name => {
+      return name.value
+        .toLowerCase()
+        .replace(/\W/g, "")
+        .includes(value.replace(/\W/g, "").toLowerCase());
+    });
+
+    this.setState({ search: value, matchingCatalysts }, () =>
+      this.getResults()
+    );
   };
 
   //TODO: enable search for catalyst / fuzzy search
@@ -49,7 +63,10 @@ class App extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    this.getResults();
+  };
 
+  getResults = () => {
     let searchKey = slug(this.state.search).toLowerCase();
     let results = cataMap[searchKey];
 
@@ -80,9 +97,11 @@ class App extends Component {
   };
 
   render() {
+    //let results = this.getResults();
+
     return (
       <div>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} autoComplete="off">
           <TextField
             label="Catalyst"
             name="catalyst"
@@ -93,6 +112,26 @@ class App extends Component {
             Search
           </Button>
         </form>
+        <List>
+          {this.state.matchingCatalysts.map(catalyst => {
+            return (
+              <ListItem
+                key={catalyst.id}
+                button
+                onClick={e => {
+                  this.setState({ search: catalyst.value }, () => {
+                    this.onCatalystClicked(catalyst.value);
+                  });
+                }}
+                disableGutters
+              >
+                <ListItemText>
+                  <Typography variant="h6">{catalyst.value}</Typography>
+                </ListItemText>
+              </ListItem>
+            );
+          })}
+        </List>
         <List>
           {this.state.results.map((result, index) => {
             return (
