@@ -16,7 +16,9 @@ export default class LocationDisplay extends Component {
           return (
             <div key={location.stage} style={{ marginRight: 4, marginTop: 4 }}>
               <Chip
-                avatar={<Avatar>{location.mobs}</Avatar>}
+                avatar={
+                  <Avatar>{location.mobs === 0 ? "?" : location.mobs}</Avatar>
+                }
                 label={location.stage}
               />
             </div>
