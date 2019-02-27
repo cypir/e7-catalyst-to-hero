@@ -11,10 +11,10 @@ export default class LocationDisplay extends Component {
   render() {
     const { locations } = this.props;
     return (
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
         {locations.map(location => {
           return (
-            <div key={location.stage} style={{ marginRight: 4 }}>
+            <div key={location.stage} style={{ marginRight: 4, marginTop: 4 }}>
               <Chip
                 avatar={<Avatar>{location.mobs}</Avatar>}
                 label={location.stage}
