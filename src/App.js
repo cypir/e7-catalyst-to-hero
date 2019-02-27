@@ -127,11 +127,14 @@ class App extends Component {
               >
                 <ListItemText>
                   <Typography variant="h6">{catalyst.value}</Typography>
-                  <Typography variant="body1">
-                    Mob count followed by stage
-                  </Typography>
+
                   {this.state.matchingCatalysts.length === 1 ? (
-                    <LocationDisplay locations={catalyst.locations} />
+                    <div>
+                      <Typography variant="body1">
+                        Mob count followed by stage
+                      </Typography>
+                      <LocationDisplay locations={catalyst.locations} />
+                    </div>
                   ) : null}
                 </ListItemText>
               </ListItem>
