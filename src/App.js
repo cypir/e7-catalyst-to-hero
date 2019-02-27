@@ -9,11 +9,13 @@ import { ListItemText } from "@material-ui/core";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Collapse from "@material-ui/core/Collapse";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import SubDisplay from "./SubDisplay.js";
 import util from "./util";
 import LocationDisplay from "./LocationDisplay";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@material-ui/icons/Clear";
 
 const catalysts = Object.keys(cataInfo).map(key => {
   return {
@@ -32,6 +34,7 @@ class App extends Component {
   };
 
   onSearchChange = e => {
+    console.log("changed");
     let matchingCatalysts = catalysts.filter(name => {
       return name.value
         .toLowerCase()
@@ -107,10 +110,30 @@ class App extends Component {
             name="catalyst"
             value={this.state.search}
             onChange={this.onSearchChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {this.state.search.length > 0 ? (
+                    <IconButton
+                      onClick={() =>
+                        this.setState({
+                          search: "",
+                          matchingCatalysts: catalysts,
+                          results: []
+                        })
+                      }
+                    >
+                      <ClearIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton disabled>
+                      <ClearIcon style={{ opacity: 0 }} />
+                    </IconButton>
+                  )}
+                </InputAdornment>
+              )
+            }}
           />
-          <Button variant="contained" type="submit" color="primary">
-            Search
-          </Button>
         </form>
         <List>
           {this.state.matchingCatalysts.map(catalyst => {
