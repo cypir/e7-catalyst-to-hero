@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import cataMap from "./e7_cata_to_hero_map.json";
-import cataNames from "./e7_name_map.json";
+import cataInfo from "./e7_catalyst_info.json";
 import slug from "slug";
 import { ListItemText } from "@material-ui/core";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -13,13 +13,15 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import SubDisplay from "./SubDisplay.js";
 import util from "./util";
-//import Fuse from "fuse.js";
+import LocationDisplay from "./LocationDisplay";
 
-const catalysts = Object.keys(cataNames).map(key => {
-  return { id: key, value: cataNames[key] };
+const catalysts = Object.keys(cataInfo).map(key => {
+  return {
+    id: key,
+    value: cataInfo[key].name,
+    locations: cataInfo[key].locations
+  };
 });
-
-//var fuse = new Fuse(catalysts, { keys: ["value"], distance: 0 });
 
 class App extends Component {
   state = {
@@ -97,8 +99,6 @@ class App extends Component {
   };
 
   render() {
-    //let results = this.getResults();
-
     return (
       <div>
         <form onSubmit={this.onSubmit} autoComplete="off">
@@ -127,6 +127,8 @@ class App extends Component {
               >
                 <ListItemText>
                   <Typography variant="h6">{catalyst.value}</Typography>
+
+                  <LocationDisplay locations={catalyst.locations} />
                 </ListItemText>
               </ListItem>
             );
